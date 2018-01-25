@@ -3,6 +3,7 @@ MAINTAINER Sytse Sijbrandij
 
 # Install required packages
 RUN apt-get update -q \
+    && apt-cache policy lsb-release \
     && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
       ca-certificates \
       openssh-server \
@@ -10,7 +11,7 @@ RUN apt-get update -q \
       apt-transport-https \
       vim \
       nano \
-	  lsb_release
+	  lsb-release
 
 # Download & Install GitLab
 # If you run GitLab Enterprise Edition point it to a location where you have downloaded it.
