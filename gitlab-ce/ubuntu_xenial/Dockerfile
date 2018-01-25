@@ -9,7 +9,8 @@ RUN apt-get update -q \
       wget \
       apt-transport-https \
       vim \
-      nano
+      nano \
+	  lsb_release
 
 # Download & Install GitLab
 # If you run GitLab Enterprise Edition point it to a location where you have downloaded it.
@@ -20,7 +21,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends gitlab-ce
 # Manage SSHD through runit
 RUN mkdir -p /opt/gitlab/sv/sshd/supervise \
     && mkfifo /opt/gitlab/sv/sshd/supervise/ok \
-    && printf "#!/bin/sh\nexec 2>&1\numask 077\nexec /usr/sbin/sshd -D" > /opt/gitlab/sv/sshd/run \
+    && printf '#!/bin/sh\nexec 2>&1\numask 077\nexec /usr/sbin/sshd -D' > /opt/gitlab/sv/sshd/run \
     && chmod a+x /opt/gitlab/sv/sshd/run \
     && ln -s /opt/gitlab/sv/sshd /opt/gitlab/service \
     && mkdir -p /var/run/sshd
