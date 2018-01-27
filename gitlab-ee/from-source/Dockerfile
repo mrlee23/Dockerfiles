@@ -68,6 +68,7 @@ RUN adduser --disabled-login --gecos 'GitLab' git
 
 # 6. Database
 RUN apt-get install -y postgresql postgresql-client libpq-dev postgresql-contrib \
+    && service postgresql restart \
     && sudo -u postgres psql -d template1 -c "CREATE USER git CREATEDB;" \
 	&& sudo -u postgres psql -d template1 -c "CREATE EXTENSION IF NOT EXISTS pg_trgm;" \
 	&& sudo -u postgres psql -d template1 -c "CREATE DATABASE gitlabhq_production OWNER git;" \
@@ -78,7 +79,7 @@ RUN apt-get install -y redis-server
 
 # 8. GitLab
 RUN cd /home/git \
-    && sudo -u git -H git clone http://server.me:9080/root/gitlab-ee.git -b license-ee gitlab
+    && sudo -u git -H git clone https://gitlab.com/gitlab-org/gitlab-ee.git -b license-ee gitlab
 
 # GitLab Configure
 RUN cd /home/git/gitlab \
