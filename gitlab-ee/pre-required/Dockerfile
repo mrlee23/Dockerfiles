@@ -68,6 +68,7 @@ RUN adduser --disabled-login --gecos 'GitLab' git
 
 # 6. Database
 RUN apt-get install -y postgresql postgresql-client libpq-dev postgresql-contrib \
+    && service postgresql restart
     && sudo -u postgres psql -d template1 -c "CREATE USER git CREATEDB;" \
 	&& sudo -u postgres psql -d template1 -c "CREATE EXTENSION IF NOT EXISTS pg_trgm;" \
 	&& sudo -u postgres psql -d template1 -c "CREATE DATABASE gitlabhq_production OWNER git;" \
